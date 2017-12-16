@@ -9,6 +9,8 @@
 import UIKit
 
 class FullImageViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
