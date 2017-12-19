@@ -18,6 +18,7 @@
 		22BB9BD519F5DD21000048C2 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BB9BD419F5DD21000048C2 /* LocationCell.swift */; };
 		AC0F238ABC1C9F48C297C3CC /* Pods_Photo_Map.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31EE16A0322BBFCB967FF300 /* Pods_Photo_Map.framework */; };
 		F98C98801FE5B8EC00273722 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F98C987F1FE5B8EC00273722 /* MapKit.framework */; };
+		F98C98821FE9C2DB00273722 /* PhotoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98C98811FE9C2DB00273722 /* PhotoAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		6063D7A2ACE217231C12CB49 /* Pods-Photo Map.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Map.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Map/Pods-Photo Map.debug.xcconfig"; sourceTree = "<group>"; };
 		EFD9F8B8F648CDF088DD9837 /* Pods-Photo Map.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Map.release.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Map/Pods-Photo Map.release.xcconfig"; sourceTree = "<group>"; };
 		F98C987F1FE5B8EC00273722 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F98C98811FE9C2DB00273722 /* PhotoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				22BB9BD419F5DD21000048C2 /* LocationCell.swift */,
+				F98C98811FE9C2DB00273722 /* PhotoAnnotation.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				228D474F19F5DA9F00DE9903 /* AppDelegate.swift in Sources */,
 				11D16EF31BD08AAE00B6CBFE /* PhotoMapViewController.swift in Sources */,
 				228D477019F5DAFF00DE9903 /* LocationsViewController.swift in Sources */,
+				F98C98821FE9C2DB00273722 /* PhotoAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
