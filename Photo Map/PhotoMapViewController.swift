@@ -19,7 +19,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     var image: UIImage!
     
     // Create a point annotation to add to the map
-    let annotation = PhotoAnnotation();
+    var annotations: [PhotoAnnotation] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,13 +86,17 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Get the location coordinates from the Lat. and Long. passed from the delegate/protocol
         let locationCoordinate2D = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude));
         
+        let annotation = PhotoAnnotation();
+        
         // set the coordinates of that point using the coordinate defined above
         annotation.coordinate = locationCoordinate2D
         
         annotation.title = locationName;
         
         // add the annotation to the MKMapView
-        mapView.addAnnotation(annotation);
+        annotations.append(annotation)
+        
+        mapView.addAnnotations(annotations);
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -116,10 +120,12 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         UIGraphicsBeginImageContext(resizeRenderImageView.frame.size)
         resizeRenderImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        var thumbnail = UIGraphicsGetImageFromCurrentImageContext()
+        let thumbnail = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        self.annotation.photo = thumbnail;
+        let index = annotations.count - 1;
+        
+        self.annotations[index].photo = thumbnail;
         
         return annotationView
     }
