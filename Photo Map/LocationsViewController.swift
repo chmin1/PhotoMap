@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol LocationsViewControllerDelegate : class {
-    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber)
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber, locationName: String)
 }
 
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -57,12 +57,13 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 
         let lat = venue.value(forKeyPath: "location.lat") as! NSNumber
         let lng = venue.value(forKeyPath: "location.lng") as! NSNumber
+        let locName = venue.value(forKeyPath: "name") as! String
 
         let latString = "\(lat)"
         let lngString = "\(lng)"
 
-        print(latString + " " + lngString)
-        self.delegate.locationsPickedLocation(controller: self, latitude: lat, longitude: lng)
+        print(latString + " " + lngString + " " + locName)
+        self.delegate.locationsPickedLocation(controller: self, latitude: lat, longitude: lng, locationName: locName)
     }
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
