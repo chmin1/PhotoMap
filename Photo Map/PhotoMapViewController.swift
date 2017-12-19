@@ -9,7 +9,8 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MKMapViewDelegate, LocationsViewControllerDelegate {
+    
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,6 +20,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self;
         
         navigationController?.navigationBar.backgroundColor = UIColor.cyan
         navigationItem.title = "Map View";
@@ -62,6 +65,9 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         
         // Dismiss UIImagePickerController to go back to your original view controller
         dismiss(animated: true, completion: nil)
+        
+        performSegue(withIdentifier: "tagSegue", sender: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,7 +75,41 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
     
-
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+        
+        // pop the LocationsViewController from the view stack and show the PhotoMapViewController
+        self.navigationController?.popViewController(animated: true)
+        
+        // Get the location coordinates from the Lat. and Long. passed from the delegate/protocol
+        let locationCoordinate2D = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude));
+        
+        // Create a point annotation to add to the map
+        let annotation = MKPointAnnotation();
+        
+        // set the coordinates of that point using the coordinate defined above
+        annotation.coordinate = locationCoordinate2D;
+        
+        annotation.title = "Picture!!";
+        
+        // add the annotation to the MKMapView
+        mapView.addAnnotation(annotation);
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseID = "myAnnotationView"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        if (annotationView == nil) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            annotationView!.canShowCallout = true
+            annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 50, height:50))
+        }
+        
+        let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
+        imageView.image = UIImage(named: "camera")
+        
+        return annotationView
+    }
     
     // MARK: - Navigation
 
@@ -77,6 +117,10 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let vc = segue.destination as! LocationsViewController;
+        vc.delegate = self;
+        
     }
     
 
