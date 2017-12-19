@@ -18,6 +18,9 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     var image: UIImage!
     
+    // Create a point annotation to add to the map
+    let annotation = PhotoAnnotation();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,7 +78,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
     
-    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber, locationName: String) {
         
         // pop the LocationsViewController from the view stack and show the PhotoMapViewController
         self.navigationController?.popViewController(animated: true)
@@ -83,13 +86,10 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // Get the location coordinates from the Lat. and Long. passed from the delegate/protocol
         let locationCoordinate2D = CLLocationCoordinate2DMake(CLLocationDegrees(latitude), CLLocationDegrees(longitude));
         
-        // Create a point annotation to add to the map
-        let annotation = MKPointAnnotation();
-        
         // set the coordinates of that point using the coordinate defined above
-        annotation.coordinate = locationCoordinate2D;
+        annotation.coordinate = locationCoordinate2D
         
-        annotation.title = "Picture!!";
+        annotation.title = locationName;
         
         // add the annotation to the MKMapView
         mapView.addAnnotation(annotation);
@@ -106,7 +106,20 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         }
         
         let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
-        imageView.image = UIImage(named: "camera")
+        imageView.image = image
+        
+        let resizeRenderImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        resizeRenderImageView.layer.borderColor = UIColor.white.cgColor
+        resizeRenderImageView.layer.borderWidth = 3.0
+        resizeRenderImageView.contentMode = UIViewContentMode.scaleAspectFill
+        resizeRenderImageView.image = (annotation as? PhotoAnnotation)?.photo
+        
+        UIGraphicsBeginImageContext(resizeRenderImageView.frame.size)
+        resizeRenderImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        var thumbnail = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        self.annotation.photo = thumbnail;
         
         return annotationView
     }
